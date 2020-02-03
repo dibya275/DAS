@@ -10,10 +10,12 @@ M = 18.01; %gm/mol
 T = 296;%K
 load H2O_multiline.par
 
-v0 = H2O_multiline(:,2)+H2O_multiline(:,4)*p; %cm-1
+v0 = H2O_multiline(:,2)+H2O_multiline(:,4)*p; %cm-1 
+%For calculation of linecenter frequency, won't the expression contain some term of chi (ref: Eqn 14, Spectraplot literature by Goldenstein 2017)?
 s = H2O_multiline(:,3);  %cm-1/(molec.cm-2) at 296K
 s = s*1013250/(K*T);
 s = s*p*chi*L;
+%shouldn't it be linestrength alone ?
 s =s*2*sqrt(log(2)/pi);
 al = H2O_multiline(:,5)*p_self+(p-p_self)*H2O_multiline(:,6); %Lorentzian lnewidth par
 ag = H2O_multiline(:,2)/c*sqrt(2*NA*K*T*log(2)/M); %gaussian linewidth Ref: hitran.ru[HWHM]
