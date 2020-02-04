@@ -19,7 +19,7 @@ vv0=v*ones(1,length(v0))-ones(length(v),1)*v0;
 x=vv0.*(sqrt(log(2)))./aD;
 y=ones(length(v),1)*(al./ag)*(sqrt(log(2)));
 z=x+1i*y;
-w = fadf(z);       % uses The code written by Sanjar M. Abrarov and Brendan M. Quine, York
+w = fadf(z)./(2*aD);       % uses The code written by Sanjar M. Abrarov and Brendan M. Quine, York
 %                      % University, Canada, March 2015.
 vf=real(w)*s';
 end
