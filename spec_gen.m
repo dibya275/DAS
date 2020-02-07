@@ -1,13 +1,13 @@
 clear;clc;
 
 T=1700;
-M=18;
-x=0.1;
+M=18.01;
+x=0.0186;
 P=1;
-L=40;
+L=1;
 
+%%
 format long;
-dat=linspace(7184,7187,1000)';
 lines=importhitran('1392-3.par');
 nu=lines.transitionWavenumber;
 s0=lines.lineIntensity;
@@ -20,23 +20,25 @@ fil1=fopen('q1.txt','r');
 partfun=fscanf(fil1,'%f %f', [2 Inf]); 
 partfun=partfun';
 
-d=d0.*(296/T).^0.96;
+d=d0.*(296/T).^0.00;
 g_a=g_a0.*(296/T).^n;
 g_s=g_s0.*(296/T).^0.75;
 nu0=nu+P.*(1-x).*d;
-S0=s0.*2.4797e19;
+S0=s0.*2.479371939e19*P*x*L;
 S=linestrength(S0,nu0,Edd,T,partfun);
-delnu_g=0.5*7.1623e-7.*nu0.*sqrt(T/M);
+delnu_g=0.5*7.162242257e-7.*nu0.*sqrt(T/M);
 delnu_l=P.*(x.*g_s+(1-x).*g_a);
 
 par0=[nu0 S delnu_g delnu_l]';
 
 
 %%
-fit=voigt(dat(:,1),par0);
-alpha=L.*fit;
+dat=linspace(7184,7187,10000)';
+fit=voigt(dat,par0);
+dat1=load('1700-3-0.0186.txt');
+
 %%
-plot(dat(:,1),alpha);
+plot(dat,fit,'g',dat1(:,1),dat1(:,2),'r');
 
 
 function q=Q(T,partfun)
